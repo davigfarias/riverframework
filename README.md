@@ -27,4 +27,49 @@ O River Framework vem com um conjunto de funcionalidades essenciais para o desen
 
 ## 🏛️ Arquitetura
 
-A estrutura do River Framework foi pensada para ser intuitiva e escalável, seguindo um padrão similar ao **Model-View-Controller (MVC)** e utilizando um **Front Controller** (`index.php`) como ponto de entrada único para todas as requisições.
+O projeto segue uma arquitetura MVC (Model-View-Controller), que promove a separação de responsabilidades e organiza o código de forma clara e sustentável.
+
+## 💻 Tecnologias e Boas Práticas
+
+Este projeto foi construído utilizando tecnologias modernas e seguindo as melhores práticas do mercado:
+
+* **Linguagem:** PHP 8+
+* **Gerenciador de Dependências:** Composer
+* **Padrões:** PSR-4 (Autoload)
+* **Componentes Principais:**
+    * **Roteamento:** `coffeecode/router`
+    * **Injeção de Dependência:** `php-di/php-di`
+    * **Templates:** `twig/twig`
+    * **Variáveis de Ambiente:** `vlucas/phpdotenv`
+    * **Banco de Dados (DBAL):** `doctrine/dbal`
+    * **Geração de Dados Falsos:** `fakerphp/faker`
+
+## 🚀 Instalação e Execução
+
+Para executar o River Framework em seu ambiente local, siga os passos abaixo:
+
+1.  **Clonar o Repositório:**
+    Primeiro, você precisa clonar o repositório do projeto para a sua máquina local usando o comando `git clone` seguido da URL do repositório. Depois, navegue para o diretório do projeto.
+
+2.  **Instalar as Dependências:**
+    Certifique-se de ter o Composer instalado. No diretório do projeto, execute o comando `composer install` para baixar e instalar todas as dependências necessárias.
+
+3.  **Configurar o Ambiente:**
+    Crie um arquivo chamado `.env` na raiz do projeto. Você pode copiar um arquivo de exemplo se houver. Neste arquivo, defina as variáveis de ambiente, como a `APPLICATION_URL`, que deve conter a URL base da sua aplicação local.
+
+4.  **Configurar o Servidor Local:**
+    Configure seu servidor web, como Apache ou Nginx, para que a raiz do documento aponte para o diretório público do projeto, onde o arquivo `index.php` está localizado. É importante garantir que as reescritas de URL (`mod_rewrite` ou equivalente) estejam ativadas para que as rotas funcionem corretamente.
+
+## 🛠️ Exemplos de Uso
+
+A utilização do framework é simples e direta. Para definir uma rota, você pode editar o arquivo `index.php`, especificando o caminho da URL, o método HTTP (como GET ou POST) e o controller responsável por responder àquela requisição. Dentro de um controller, você pode processar a lógica necessária e usar o motor de templates Twig para renderizar uma view e enviá-la como resposta ao navegador.
+
+## 🔮 Melhorias Futuras
+
+Este projeto está em constante evolução. Alguns dos próximos passos planejados são:
+
+* [ ] Implementar uma camada de **Modelo** completa, com ORM para facilitar a interação com o banco de dados.
+* [ ] Desenvolver um sistema de **autenticação e autorização** de usuários.
+* [ ] Criar um **sistema de logging** para registrar eventos e erros da aplicação.
+* [ ] Adicionar um sistema de **cadastro de usuários** e histórico de registros.
+* [ ] Construir mais **componentes reutilizáveis** para funcionalidades comuns (ex: upload de arquivos, envio de e-mails).
