@@ -52,17 +52,85 @@ Para executar o River Framework em seu ambiente local, siga os passos abaixo:
     Primeiro, você precisa clonar o repositório do projeto para a sua máquina local usando o comando `git clone` seguido da URL do repositório. Depois, navegue para o diretório do projeto.
 
 2.  **Instalar as Dependências:**
-    Certifique-se de ter o Composer instalado. No diretório do projeto, execute o comando `composer install` para baixar e instalar todas as dependências necessárias.
+    Certifique-se de ter o Composer instalado e execute o comando:
+
+    ```bash
+    composer install
+    ```
 
 3.  **Configurar o Ambiente:**
-    Crie um arquivo chamado `.env` na raiz do projeto. Você pode copiar um arquivo de exemplo se houver. Neste arquivo, defina as variáveis de ambiente, como a `APPLICATION_URL`, que deve conter a URL base da sua aplicação local.
+    Crie um arquivo `.env` na raiz do projeto (você pode copiar o `.env.example` se houver um) e adicione as variáveis de ambiente necessárias, como a URL da aplicação:
+
+    ```
+    APPLICATION_URL=http://localhost/river-framework
+    ```
 
 4.  **Configurar o Servidor Local:**
-    Configure seu servidor web, como Apache ou Nginx, para que a raiz do documento aponte para o diretório público do projeto, onde o arquivo `index.php` está localizado. É importante garantir que as reescritas de URL (`mod_rewrite` ou equivalente) estejam ativadas para que as rotas funcionem corretamente.
+    Configure seu servidor web (Apache, Nginx, etc.) para que a raiz do documento aponte para o diretório raiz do projeto, onde o `index.php` está localizado. Certifique-se de que o `mod_rewrite` (ou equivalente) esteja ativado. Um exemplo de arquivo `.htaccess` para Apache seria:
+
+    ```apache
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [QSA,L]
+    ```
 
 ## 🛠️ Exemplos de Uso
 
-A utilização do framework é simples e direta. Para definir uma rota, você pode editar o arquivo `index.php`, especificando o caminho da URL, o método HTTP (como GET ou POST) e o controller responsável por responder àquela requisição. Dentro de um controller, você pode processar a lógica necessária e usar o motor de templates Twig para renderizar uma view e enviá-la como resposta ao navegador.
+**Definindo uma Rota:**
+
+As rotas são definidas no arquivo `index.php` (ou em um arquivo de rotas dedicado em `config/`).
+
+```php
+// index.php
+<?php
+
+require_once __DIR__ . "/vendor/autoload.php";
+
+use CoffeeCode\Router\Router;
+
+$router = new Router("APPLICATION_URL");
+
+// Define o namespace padrão para os controllers
+$router->namespace("Src\Controller");
+
+// Rota GET para a página inicial, gerenciada pelo método 'index' do 'IndexController'
+$router->get("/", "IndexController:index");
+
+// Processa a rota
+$router->dispatch();
+
+if ($router->error()) {
+   var_dump($router->error());
+}
+```
+
+**Criando um Controller:**
+
+Os controllers são responsáveis por receber as requisições, processar os dados e retornar uma resposta (geralmente renderizando uma view).
+
+```php
+// src/Controller/IndexController.php
+<?php
+
+namespace Src\Controller;
+
+use Src\Controller\Controller;
+
+class IndexController extends Controller
+{
+    private string $view = "landingPage.html.twig";
+
+    public function index()
+    {
+        // Renderiza a view 'landingPage.html.twig' e envia a resposta
+        $this->response->setContent($this->render($this->view, [
+            'title' => 'Bem-vindo ao River Framework!'
+        ]));
+        $this->response->send();
+    }
+}
+```
 
 ## 🔮 Melhorias Futuras
 
